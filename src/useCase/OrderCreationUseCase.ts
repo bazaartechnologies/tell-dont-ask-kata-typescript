@@ -1,9 +1,9 @@
 import Order from '../domain/Order';
 import OrderItem from '../domain/OrderItem';
-import { OrderStatus } from '../domain/OrderStatus';
+import {OrderStatus} from '../domain/OrderStatus';
 import Product from '../domain/Product';
 import OrderRepository from '../repository/OrderRepository';
-import { ProductCatalog } from '../repository/ProductCatalog';
+import {ProductCatalog} from '../repository/ProductCatalog';
 import SellItemsRequest from './SellItemsRequest';
 import UnknownProductException from './UnknownProductException';
 
@@ -17,12 +17,13 @@ class OrderCreationUseCase {
   }
 
   public run(request: SellItemsRequest): void {
-    const order: Order = new Order();
-    order.setStatus(OrderStatus.CREATED);
-    order.setItems([]);
-    order.setCurrency('EUR');
-    order.setTotal(0);
-    order.setTax(0);
+    const order: Order = new Order(0,'EUR',[],0,OrderStatus.CREATED);
+
+    // order.setStatus(OrderStatus.CREATED);
+    // order.setItems([]);
+    // order.setCurrency('EUR');
+    // order.setTotal(0);
+    // order.setTax(0);
 
     for (const itemRequest of request.getRequests()) {
        const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
